@@ -59,9 +59,9 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
     }
 
-    //Configuração de resursos estáticos(js, css, images, etc).
+    //Configuração de resursos estáticos(js, css, images, etc). Coisas que o spring secutiry não deve interceptar
     @Override
     public void configure(WebSecurity web) throws Exception {
-        super.configure(web);
+        web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configurations/**", "/swagger-resources/**");
     }
 }
