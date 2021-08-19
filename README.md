@@ -13,7 +13,7 @@ Foi desenvolvido com objetivo de aprendizado no curso [Spring Boot-Cache-Seguran
 - Autenticação JWT;
 - Swagger Documentation;
 
-## Installation
+## Instalação
 
 Para clonar a rodar o projeto, use:
 
@@ -28,5 +28,5 @@ mvn spring-boot:run
 Após clonar e executar o projeto, acesse [Swagger Documentation API](http://localhost:8080/swagger-ui.html#/)
 
 
-## License
+## Licença de software
 [MIT](https://choosealicense.com/licenses/mit/)
