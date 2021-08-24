@@ -13,7 +13,7 @@ Foi desenvolvido com objetivo de aprendizado no curso [Spring Boot-Cache-Seguran
 - Autenticação JWT;
 - Swagger Documentation;
 
-## Instalação
+## Execução
 
 Para clonar a rodar o projeto, use:
 
@@ -21,6 +21,15 @@ Para clonar a rodar o projeto, use:
 git clone https://github.com/sartorileonardo/sistema-forum;
 cd sistema-forum
 mvn spring-boot:run
+```
+
+## Execução do JAR com parâmetros
+```bash
+java -jar -DFORUM_DATABASE_URL=DATABASE:h2:
+mem:alura-forum
+-DFORUM_DATABASE_USERNAME=sa
+-DFORUM_DATABASE_PASSWORD=
+-DFORUM_JWT_SECRET=123456 forum.jar
 ```
 
 ## Documentação de API
