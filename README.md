@@ -23,13 +23,10 @@ cd sistema-forum
 mvn spring-boot:run
 ```
 
-## Execução do JAR com parâmetros
+## Execução com Docker
 ```bash
-java -jar -DFORUM_DATABASE_URL=DATABASE:h2:
-mem:alura-forum
--DFORUM_DATABASE_USERNAME=sa
--DFORUM_DATABASE_PASSWORD=
--DFORUM_JWT_SECRET=123456 forum.jar
+docker build -t alura/forum .
+docker run -p 8080:8080 -e FORUM_DATABASE_URL='jdbc:h2:mem:alura-forum' -e FORUM_DATABASE_USERNAME='sa' -e FORUM_DATABASE_PASSWORD='' -e FORUM_JWT_SECRET='123456' alura/forum
 ```
 
 ## Documentação de API

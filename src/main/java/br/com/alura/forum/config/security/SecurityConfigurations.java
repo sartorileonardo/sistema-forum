@@ -1,6 +1,5 @@
 package br.com.alura.forum.config.security;
 
-import br.com.alura.forum.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,9 +15,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import br.com.alura.forum.repository.UsuarioRepository;
+
 @EnableWebSecurity
 @Configuration
-@Profile("prod")
+@Profile(value = {"prod", "test"})
 public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -36,20 +37,16 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
         return super.authenticationManager();
     }
 
-    //Configuração de autenticação
+    //Configuracoes de autenticacao
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(autenticacaoService)
-            .passwordEncoder(new BCryptPasswordEncoder());
-
-        ;
+        auth.userDetailsService(autenticacaoService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
-    //Configuração de autorização
+    //Configuracoes de autorizacao
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
+        http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/topicos").permitAll()
                 .antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
@@ -59,12 +56,13 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
-
     }
 
-    //Configuração de resursos estáticos(js, css, images, etc). Coisas que o spring secutiry não deve interceptar
+
+    //Configuracoes de recursos estaticos(js, css, imagens, etc.)
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configurations/**", "/swagger-resources/**");
+        web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
     }
+
 }

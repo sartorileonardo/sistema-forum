@@ -1,14 +1,15 @@
 package br.com.alura.forum.config.security;
 
-import br.com.alura.forum.modelo.Usuario;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import br.com.alura.forum.modelo.Usuario;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class TokenService {
@@ -25,7 +26,7 @@ public class TokenService {
         Date dataExpiracao = new Date(hoje.getTime() + Long.parseLong(expiration));
 
         return Jwts.builder()
-                .setIssuer("API do forum da Alura")
+                .setIssuer("API do Fórum da Alura")
                 .setSubject(logado.getId().toString())
                 .setIssuedAt(hoje)
                 .setExpiration(dataExpiracao)
@@ -34,7 +35,7 @@ public class TokenService {
     }
 
     public boolean isTokenValido(String token) {
-        try{
+        try {
             Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
             return true;
         } catch (Exception e) {
@@ -46,4 +47,5 @@ public class TokenService {
         Claims claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
         return Long.parseLong(claims.getSubject());
     }
+
 }
